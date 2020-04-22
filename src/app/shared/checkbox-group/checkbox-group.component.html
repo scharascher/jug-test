@@ -1,0 +1,9 @@
+<div [formGroup]="parentForm">
+  <div class="mb-10"><b><ng-content></ng-content></b></div>
+  <div class="mb-5" *ngFor="let item of items"
+       formGroupName="{{controlName}}">
+    <app-checkbox [controlName]="item"
+                  [parentForm]="formGroup"
+                  [value]="item">{{item}}</app-checkbox>
+  </div>
+</div>

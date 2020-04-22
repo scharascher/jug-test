@@ -1,1 +1,78 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.reports {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 20px;
+}
+
+.reports-list {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+}
+
+.reports-item {
+  width: 30%;
+  padding: 20px;
+  border: 1px solid black;
+  display: flex;
+  margin-bottom: 20px;
+  margin-right: 5%;
+
+  &:nth-child(3n) {
+    margin-right: 0;
+  }
+
+  @media (max-width: 767px) {
+    width: 280px;
+    margin-right: 30px;
+
+    &:nth-child(3n) {
+      margin-right: 30px;
+    }
+  }
+}
+
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__item {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+input[type="text"], button {
+  height: 30px;
+  padding: 0 10px;
+}
+
+button {
+  font-size: 18px;
+}
+
+input[type="text"] {
+  font-size: 14px;
+  width: 200px;
+}

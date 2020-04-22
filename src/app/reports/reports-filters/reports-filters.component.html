@@ -1,0 +1,23 @@
+<form [formGroup]="form"
+      class="flex">
+  <div class="flex__item mb-10">
+    <app-checkbox-group [controlName]="'tags'"
+                        [parentForm]="form"
+                        [items]="tags">
+      Tags
+    </app-checkbox-group>
+  </div>
+  <div class="flex__item mb-10">
+    <app-checkbox-group [controlName]="'langs'"
+                        [parentForm]="form"
+                        [items]="langs">
+      Langs
+    </app-checkbox-group>
+  </div>
+  <div class="flex__item mb-10">
+    <app-input [controlName]="'author'"
+               [parentForm]="form"
+               [placeholder]="'author'"></app-input>
+  </div>
+  <app-button (action)="resetFilters()">Reset</app-button>
+</form>
