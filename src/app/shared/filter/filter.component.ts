@@ -68,9 +68,10 @@ export class FilterComponent<T> implements OnInit {
             if (Array.isArray(item[key])) {
               return !Object.values(formValue[key]).includes(true) || item[key].some(tag => formValue[key][tag]);
             }
-            console.error('incorrect checkbox group type: ', key);
-            return false;
+            console.error('incorrect checkbox group type: ', key, typeof key);
+            return true;
         }
+        return true;
       });
     }
     return activeItems;
