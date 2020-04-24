@@ -1,4 +1,9 @@
 <div class="reports">
-  <div class="mb-10"><app-reports-filters (filtersChanged)="onFiltersChange($event)"></app-reports-filters></div>
-  <div><app-reports-list [reports]="activeReports"></app-reports-list></div>
+  <div class="mb-10">
+    <app-reports-filters [reports]="reports"
+                         (activeReports)="setActiveReports($event)"></app-reports-filters>
+  </div>
+  <div>
+    <app-reports-list [reports]="activeReports"></app-reports-list>
+  </div>
 </div>

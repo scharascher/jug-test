@@ -1,59 +1,49 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ReportsApiService} from '../reports-api.service';
 import {take} from 'rxjs/operators';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {ReportFilter} from '../reports-helper';
+import {Report} from '../reports-helper';
+import {Filter, FilterType} from '../../shared/filter/filter-helper';
+import {Observable, zip} from 'rxjs';
 
 @Component({
   selector: 'app-reports-filters',
   templateUrl: './reports-filters.component.html',
-  styleUrls: ['./reports-filters.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./reports-filters.component.scss']
 })
 export class ReportsFiltersComponent implements OnInit {
-  @Output() filtersChanged = new EventEmitter<ReportFilter>();
-  tags: string[];
-  langs: string[];
-  form: FormGroup;
+  @Output() activeReports = new EventEmitter<Report[]>();
+  @Input() reports: Report[];
+  filters: Partial<Record<keyof Report, Filter>> = {
+    author: {
+      type: FilterType.INPUT,
+    },
+    lang: {
+      type: FilterType.CHECKBOX_GROUP, values: []
+    },
+    tags: {
+      type: FilterType.CHECKBOX_GROUP, values: []
+    }
+  };
 
-  constructor(protected fb: FormBuilder,
-              protected reportsApi: ReportsApiService,
-              protected detectionRef: ChangeDetectorRef) {
-    this.form = this.fb.group({
-      author: new FormControl(''),
-      tags: this.fb.group({}),
-      langs: this.fb.group({})
-    });
-
-    this.form.valueChanges.subscribe(val => {
-      this.applyFilters();
-    });
+  constructor(protected reportsApi: ReportsApiService) {
   }
 
   ngOnInit(): void {
-    this.getTags();
-    this.getLangs();
-  }
-
-  getTags(): void {
-    this.reportsApi.getTags().pipe(take(1)).subscribe(tags => {
-      this.tags = tags;
-      this.detectionRef.detectChanges();
+    zip(this.getLangs(), this.getTags()).subscribe(results => {
+      this.filters.lang.values = results[0];
+      this.filters.tags.values = results[1];
     });
   }
 
-  getLangs(): void {
-    this.reportsApi.getLangs().pipe(take(1)).subscribe(langs => {
-      this.langs = langs;
-      this.detectionRef.detectChanges();
-    });
+  getTags(): Observable<string[]> {
+    return this.reportsApi.getTags().pipe(take(1));
   }
 
-  applyFilters(): void {
-    this.filtersChanged.emit(this.form.value);
+  getLangs(): Observable<string[]> {
+    return this.reportsApi.getLangs().pipe(take(1));
   }
 
-  resetFilters(): void {
-    this.form.reset();
+  applyFilters(event: Report[]): void {
+    this.activeReports.emit(event);
   }
 }

@@ -1,0 +1,31 @@
+<form [formGroup]="form"
+      class="flex">
+  <div class="flex__item mb-10" *ngFor="let key of filterKeys"
+       [ngSwitch]="filters[key].type">
+    <div *ngSwitchCase="filterTypes.CHECKBOX_GROUP">
+      <app-checkbox-group [controlName]="key"
+                          [parentForm]="form"
+                          [items]="filters[key].values">
+        {{key}}
+      </app-checkbox-group>
+    </div>
+    <div *ngSwitchCase="filterTypes.INPUT">
+      <app-input [controlName]="key"
+                 [parentForm]="form"
+                 [placeholder]="key"></app-input>
+    </div>
+  </div>
+<!--  <div class="flex__item mb-10">-->
+<!--    <app-checkbox-group [controlName]="'lang'"-->
+<!--                        [parentForm]="form"-->
+<!--                        [items]="filters.lang.values">-->
+<!--      Langs-->
+<!--    </app-checkbox-group>-->
+<!--  </div>-->
+<!--  <div class="flex__item mb-10">-->
+<!--    <app-input [controlName]="'author'"-->
+<!--               [parentForm]="form"-->
+<!--               [placeholder]="'author'"></app-input>-->
+<!--  </div>-->
+  <app-button (action)="resetFilters()">Reset</app-button>
+</form>

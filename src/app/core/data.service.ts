@@ -58,7 +58,6 @@ export class DataService implements InMemoryDbService {
       'future',
       'frameworks',
       'graphql',
-      'frameworks',
       'buildtools',
       'automatization',
       'experimental'];

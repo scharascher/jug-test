@@ -6,10 +6,7 @@ import {ReportsComponent} from './reports/reports.component';
 import {ReportsApiService} from './reports-api.service';
 import {ReportsFiltersComponent} from './reports-filters/reports-filters.component';
 import {TagsModule} from '../shared/tags/tags.module';
-import {InputModule} from '../shared/input/input.module';
-import {CheckboxGroupModule} from '../shared/checkbox-group/checkbox-group.module';
-import {ButtonModule} from '../shared/button/button.module';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FilterModule} from '../shared/filter/filter.module';
 
 
 @NgModule({
@@ -20,11 +17,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
   imports: [
     CommonModule,
     TagsModule,
-    InputModule,
-    CheckboxGroupModule,
-    ButtonModule,
-    FormsModule,
-    ReactiveFormsModule
+    FilterModule
   ],
   exports: [
     ReportsComponent
